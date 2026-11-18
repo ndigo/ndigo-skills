@@ -1,0 +1,20 @@
+{
+  "name": "@ndigo/skills",
+  "version": "0.1.0",
+  "description": "AI agent skills for building Ndigo applications",
+  "type": "module",
+  "private": true,
+  "files": [
+    "ndigo-*",
+    "README.md"
+  ],
+  "keywords": [
+    "ndigo",
+    "skills",
+    "ai-agents",
+    "claude-code",
+    "opencode"
+  ],
+  "license": "ISC",
+  "author": "Jeff Rose <jeff_rose@outlook.com>"
+}
