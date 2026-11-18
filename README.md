@@ -26,10 +26,40 @@ ndigo ai init
 | `ndigo-verify` | Verification and conformance checks |
 | `ndigo-views` | View resolvers and templates |
 
+## Working on a skill
+
+Each skill is a `<id>/SKILL.md` file whose frontmatter `name` matches its
+directory. Keep skills at or below 120 lines so an agent can load one without
+spending its context.
+
+```bash
+node scripts/check.mjs
+```
+
+CI runs the same check on every push and pull request.
+
 ## Compatibility
 
 Skills track the Ndigo framework. Check the skill's frontmatter for the compatible framework version range.
 
-## Source
+## Syncing into the monorepo
 
-Canonical source for these skills. The Ndigo monorepo bundles a synced copy for offline `ndigo ai init`.
+This repository is the canonical source. The Ndigo monorepo bundles a pinned
+snapshot for offline `ndigo ai init`, and `tools/agent-content/build.mjs`
+refuses to emit assets while that snapshot drifts from its lock.
+
+1. Change the skills here and merge to `main`.
+2. In a clean checkout of `ndigo`, run:
+
+    ```bash
+    pnpm agent-content:sync
+    pnpm agent-content:build
+    pnpm agent-content:check
+    ```
+
+3. Commit `tools/agent-content/skills/` and `skills.lock.json` with the change.
+
+`pnpm agent-content:sync` reads the sibling `../ndigo-skills` checkout by
+default; set `NDIGO_SKILLS_DIR` to point elsewhere. The source checkout must be
+clean, so the commit recorded in `skills.lock.json` identifies the content
+exactly.

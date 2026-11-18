@@ -4,6 +4,9 @@
   "description": "AI agent skills for building Ndigo applications",
   "type": "module",
   "private": true,
+  "scripts": {
+    "check": "node scripts/check.mjs"
+  },
   "files": [
     "ndigo-*",
     "README.md"
