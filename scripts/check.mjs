@@ -3,10 +3,10 @@
  * Validates every skill in this repository.
  *
  * A skill is a `<id>/SKILL.md` directory whose frontmatter `name` matches the
- * directory, carries a description, and stays within the 120-line budget that
- * keeps one skill loadable without exhausting an agent's context. The README
- * table must list every skill. Run in CI and before syncing into the Ndigo
- * monorepo.
+ * directory, carries a description, may declare the workspace `package` it
+ * ships with, and stays within the 120-line budget that keeps one skill
+ * loadable without exhausting an agent's context. The README table must list
+ * every skill. Run in CI and before syncing into the Ndigo monorepo.
  */
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { dirname, join } from 'node:path';
@@ -14,6 +14,7 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
 const MAX_SKILL_LINES = 120;
+const packageNamePattern = /^@ndigo\/[a-z0-9-]+$/u;
 
 const ids = readdirSync(ROOT)
     .filter((entry) => statSync(join(ROOT, entry)).isDirectory() && existsSync(join(ROOT, entry, 'SKILL.md')))
@@ -33,6 +34,13 @@ for (const id of ids) {
     const name = /^name:\s*(.+)$/mu.exec(match[1])?.[1]?.trim();
     if (name !== id) problems.push(`${id}/SKILL.md declares name '${name}', expected '${id}'`);
     if (!/^description:\s*\S/mu.test(match[1])) problems.push(`${id}/SKILL.md is missing a description`);
+    const packageLine = /^package:\s*(.+)$/mu.exec(match[1])?.[1]?.trim();
+    if (packageLine !== undefined) {
+        const packageName = packageLine.replace(/^["']|["']$/gu, '');
+        if (!packageNamePattern.test(packageName)) {
+            problems.push(`${id}/SKILL.md declares package '${packageName}'; expected @ndigo/<lower-case-name>`);
+        }
+    }
     const bodyLines = text.split('\n').length;
     if (bodyLines > MAX_SKILL_LINES) {
         problems.push(`${id}/SKILL.md is ${bodyLines} lines; keep skills at or below ${MAX_SKILL_LINES}`);

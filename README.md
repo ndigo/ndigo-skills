@@ -32,6 +32,13 @@ Each skill is a `<id>/SKILL.md` file whose frontmatter `name` matches its
 directory. Keep skills at or below 120 lines so an agent can load one without
 spending its context.
 
+A skill may declare the workspace package it belongs to, for example
+`package: "@ndigo/ui"`. The Ndigo monorepo emits such skills into that
+package's `skills/` directory (with the package's export index alongside), so
+an agent can read `node_modules/@ndigo/<pkg>/skills/<id>/SKILL.md` when the
+package is a direct dependency. Skills without the field ship only through the
+Ndigo CLI assets and the published mirror.
+
 ```bash
 node scripts/check.mjs
 ```
