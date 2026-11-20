@@ -14,7 +14,7 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
 const MAX_SKILL_LINES = 120;
-const PACKAGE_NAME_PATTERN = /^@ndigo\/[a-z0-9-]+$/u;
+const packageNamePattern = /^@ndigo\/[a-z0-9-]+$/u;
 
 const ids = readdirSync(ROOT)
     .filter((entry) => statSync(join(ROOT, entry)).isDirectory() && existsSync(join(ROOT, entry, 'SKILL.md')))
@@ -37,7 +37,7 @@ for (const id of ids) {
     const packageLine = /^package:\s*(.+)$/mu.exec(match[1])?.[1]?.trim();
     if (packageLine !== undefined) {
         const packageName = packageLine.replace(/^["']|["']$/gu, '');
-        if (!PACKAGE_NAME_PATTERN.test(packageName)) {
+        if (!packageNamePattern.test(packageName)) {
             problems.push(`${id}/SKILL.md declares package '${packageName}'; expected @ndigo/<lower-case-name>`);
         }
     }
