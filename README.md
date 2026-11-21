@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://github.com/ndigo/.github/raw/main/profile/assets/ndigo.svg" alt="Ndigo logo" width="120" height="120">
+</p>
+
 # Ndigo Skills
 
 AI agent skills for building Ndigo applications. Install with:
