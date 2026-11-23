@@ -20,9 +20,11 @@ ndigo ai init
 
 | Skill | Description |
 |---|---|
+| `ndigo-agent` | Expose an application's handlers as MCP tools |
 | `ndigo-app` | Scaffold, run, configure, and update a Ndigo application |
 | `ndigo-debug` | Debugging Ndigo apps (logs, traces, health endpoints) |
 | `ndigo-endpoint` | Add HTTP endpoints, handlers, and validation |
+| `ndigo-model` | Add a provider-neutral model loop with streaming and tools |
 | `ndigo-persistence` | Database, migrations, and entity management |
 | `ndigo-reactive` | Reactive signals and state management |
 | `ndigo-ui` | UI components and theming |
