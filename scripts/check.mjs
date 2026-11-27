@@ -52,6 +52,14 @@ for (const id of ids) {
     if (!readme.includes(`\`${id}\``)) problems.push(`README.md does not list ${id}`);
 }
 
+// Install command must use the current CLI and the real repository.
+if (!readme.includes('npx skills add ndigo/ndigo-skills')) {
+    problems.push('README.md install snippet must read `npx skills add ndigo/ndigo-skills`');
+}
+if (readme.includes('npx add-skill')) {
+    problems.push('README.md uses the deprecated `npx add-skill` command');
+}
+
 if (problems.length > 0) {
     for (const problem of problems) process.stderr.write(`✗ ${problem}\n`);
     process.exitCode = 1;
