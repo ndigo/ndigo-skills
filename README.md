@@ -7,7 +7,7 @@
 AI agent skills for building Ndigo applications. Install with:
 
 ```bash
-npx add-skill ndigo/ndigo-skills
+npx skills add ndigo/ndigo-skills
 ```
 
 Or via the Ndigo CLI:
